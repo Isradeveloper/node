@@ -3,6 +3,8 @@
 // const { getUserById } = require("./js-foundation/03-callbacks");
 // const { getUserById } = require("./js-foundation/04-arrow");
 
+const { buildLogger } = require("./plugins");
+
 // const id = 2;
 
 // getUserById(id, function (error, user) {
@@ -31,15 +33,20 @@
 
 // console.log(john);
 
-const { getPokemonById } = require("./js-foundation/06-promises");
+// const { getPokemonById } = require("./js-foundation/06-promises");
 
-getPokemonById(3)
-  .then((pokemon) => {
-    console.log({pokemon});
-  })
-  .catch((error) => {
-    console.error(error);
-  })
-  .finally(() => {
-    console.log("Pokemon fetched");
-  });
+// getPokemonById(3)
+//   .then((pokemon) => {
+//     console.log({pokemon});
+//   })
+//   .catch((error) => {
+//     console.error(error);
+//   })
+//   .finally(() => {
+//     console.log("Pokemon fetched");
+//   });
+
+const logger = buildLogger("index.js");
+
+logger.log("Hola mundo!");
+logger.error("Error en la aplicación");
