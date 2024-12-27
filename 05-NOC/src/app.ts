@@ -6,7 +6,6 @@ import { Server } from './presentation/server';
 })();
 
 function main() {
-  // Server.start();
-  process.loadEnvFile();
-  console.log(envs);
+  Server.start();
+  // console.log(envs.MAILER_EMAIL, envs.MAILER_SECRET_KEY);
 }
