@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
+import fileUpload from 'express-fileupload';
 import path from 'path';
-
 interface Options {
   port: number;
   routes: Router;
@@ -25,6 +25,13 @@ export class Server {
     //* Middlewares
     this.app.use(express.json()); // raw
     this.app.use(express.urlencoded({ extended: true })); // x-www-form-urlencoded
+
+    //* File Upload
+    this.app.use(
+      fileUpload({
+        limits: { fileSize: 50 * 1024 * 1024 },
+      }),
+    );
 
     //* Public Folder
     this.app.use(express.static(this.publicPath));
