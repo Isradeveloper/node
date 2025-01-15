@@ -1,17 +1,40 @@
 import { CategoryModel } from '../../data/mongo-db';
 import {
-  CategoryEntity,
   CreateCategoryDto,
   CustomError,
+  PaginationDto,
   UserEntity,
 } from '../../domain';
 
 export class CategoriesService {
   constructor() {}
 
-  public async getCategories() {
-    const categories = await CategoryModel.find();
-    return categories.map((category) => CategoryEntity.fromObject(category));
+  public async getCategories(paginationDto: PaginationDto) {
+    const { page, limit } = paginationDto;
+
+    // const total = await CategoryModel.countDocuments();
+
+    // const categories = await CategoryModel.find()
+    //   .skip((page - 1) * limit)
+    //   .limit(limit);
+
+    const [total, categories] = await Promise.all([
+      CategoryModel.countDocuments(),
+      CategoryModel.find()
+        .skip((page - 1) * limit)
+        .limit(limit),
+    ]);
+
+    return {
+      page,
+      limit,
+      total,
+      categories: categories.map((category) => ({
+        id: category.id,
+        name: category.name,
+        available: category.available,
+      })),
+    };
   }
 
   public async createCategory(
